@@ -7,6 +7,7 @@ import { tokens } from '@/lib/tokens';
 import { Eyebrow } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { Badge } from '@/components/ui/Badge';
+import { Loading } from '@/components/ui/Spinner';
 
 type Ticket = {
   reference: string;
@@ -72,7 +73,7 @@ export default function MyCommunityTicketsPage() {
       </Head>
 
       {loading ? (
-        <div style={{ padding: 40, color: tokens.color.textSecondary }}>Loading…</div>
+        <Loading />
       ) : tickets.length === 0 ? (
         <div style={{ background: '#fff', border: `1px solid ${tokens.color.border}`, borderRadius: 14, padding: 40, textAlign: 'center' }}>
           <div style={{ fontSize: 15, fontWeight: 700 }}>No community tickets yet</div>

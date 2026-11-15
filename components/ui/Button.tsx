@@ -60,6 +60,7 @@ export const Button = styled.button<ButtonProps>`
   border-radius: ${tokens.radius.md};
   font-weight: 700;
   letter-spacing: 0.01em;
+  white-space: nowrap;
   transition: background 0.15s, color 0.15s, border-color 0.15s;
   ${(p) => sizes[p.$size ?? 'md']}
   ${(p) => variants[p.$variant ?? 'primary']}

@@ -9,6 +9,7 @@ import { Button } from '@/components/ui/Button';
 import { Badge } from '@/components/ui/Badge';
 import { Eyebrow } from '@/components/ui/Card';
 import type { MockEvent } from '@/lib/mockData';
+import { Loading } from '@/components/ui/Spinner';
 
 const Page = styled.div`
   background: ${tokens.color.surface};
@@ -168,7 +169,7 @@ export default function RegistrationSuccessPage({ params }: { params: { slug: st
   }, [params.slug, refFromUrl]);
 
   if (loading) {
-    return <Page><Wrap><div style={{ textAlign: 'center', padding: 60, color: tokens.color.textSecondary }}>Loading…</div></Wrap></Page>;
+    return <Page><Wrap><Loading pad={60} /></Wrap></Page>;
   }
 
   if (!event) {

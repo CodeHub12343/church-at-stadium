@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import styled from 'styled-components';
+import { Loading } from '@/components/ui/Spinner';
 import { tokens } from '@/lib/tokens';
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
@@ -226,7 +227,7 @@ export default function MessagesPage() {
             </div>
           </ListHead>
 
-          {loading && <div style={{ padding: 20, color: tokens.color.textSecondary, fontSize: 13 }}>Loading…</div>}
+          {loading && <Loading pad={24} />}
           {!loading && threads.length === 0 && (
             <div style={{ padding: 24, color: tokens.color.textSecondary, fontSize: 13, textAlign: 'center' }}>
               No conversations yet.<br />Click <strong>+ New</strong> to start one.

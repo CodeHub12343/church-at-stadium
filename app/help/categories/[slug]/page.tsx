@@ -10,6 +10,7 @@ import { Container, Section } from '@/components/ui/Container';
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
 import { Eyebrow } from '@/components/ui/Card';
+import { Loading } from '@/components/ui/Spinner';
 
 interface Category {
   slug: string;
@@ -234,7 +235,7 @@ export default function HelpCategoryPage({ params }: { params: { slug: string } 
     })();
   }, [params.slug]);
 
-  if (status === 'loading') return <><PublicNav /><div style={{ padding: 60, textAlign: 'center', color: tokens.color.textSecondary }}>Loading…</div></>;
+  if (status === 'loading') return <><PublicNav /><Loading pad={60} /></>;
   if (status === 'missing' || !cat) return <><PublicNav /><div style={{ padding: 60, textAlign: 'center' }}><h1>Category not found</h1><Link href="/help" style={{ color: tokens.color.primary }}>Back to Help</Link></div></>;
 
   return (

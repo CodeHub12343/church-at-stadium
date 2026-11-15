@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from 'react';
 import styled from 'styled-components';
+import { Loading } from '@/components/ui/Spinner';
 import { tokens } from '@/lib/tokens';
 import { PublicNav } from '@/components/public/PublicNav';
 import { PublicFooter } from '@/components/public/PublicFooter';
@@ -228,7 +229,7 @@ export default function EventsPage() {
       <Container>
         <Grid>
           {loading ? (
-            <EmptyState>Loading events…</EmptyState>
+            <Loading label="Loading events…" />
           ) : filtered.length === 0 ? (
             <EmptyState>
               <strong>No events match that search.</strong>

@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
 import styled from 'styled-components';
+import { Loading } from '@/components/ui/Spinner';
 import { tokens } from '@/lib/tokens';
 import { Badge, BadgeTone } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
@@ -156,7 +157,7 @@ export default function AdminUsersPage() {
         </thead>
         <tbody>
           {loading && (
-            <tr><td colSpan={6} style={{ textAlign: 'center', color: tokens.color.textSecondary }}>Loading…</td></tr>
+            <tr><td colSpan={6}><Loading pad={24} /></td></tr>
           )}
           {!loading && users.length === 0 && (
             <tr><td colSpan={6} style={{ textAlign: 'center', color: tokens.color.textSecondary }}>No users match.</td></tr>

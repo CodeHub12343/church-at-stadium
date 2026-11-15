@@ -10,6 +10,7 @@ import { Button } from '@/components/ui/Button';
 import { Input, Label, Select, FieldGroup, Textarea, Hint } from '@/components/ui/Input';
 import type { MockEvent } from '@/lib/mockData';
 import { submitJson, isValidEmail, required } from '@/lib/form';
+import { Loading } from '@/components/ui/Spinner';
 
 const Topbar = styled.div`
   height: 56px;
@@ -219,7 +220,7 @@ export default function RegisterEventPage({ params }: { params: { slug: string }
   }, [authStatus]);
 
   if (authStatus === 'loading' || status === 'loading') {
-    return <Page><div style={{ padding: 60, textAlign: 'center', color: tokens.color.textSecondary }}>Loading…</div></Page>;
+    return <Page><Loading pad={60} /></Page>;
   }
   if (authStatus === 'unauthenticated') {
     return <Page><div style={{ padding: 60, textAlign: 'center', color: tokens.color.textSecondary }}>Redirecting to sign in…</div></Page>;

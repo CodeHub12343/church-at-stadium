@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import styled from 'styled-components';
+import { Loading } from '@/components/ui/Spinner';
 import { tokens } from '@/lib/tokens';
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
@@ -202,7 +203,7 @@ export default function AttendeePortalPage() {
         </StatRow>
       </Head>
 
-      {loading && <div style={{ padding: 20, color: tokens.color.textSecondary }}>Loading…</div>}
+      {loading && <Loading pad={24} />}
       {!loading && !feature && (
         <div style={{ marginTop: 22, padding: 28, border: `1px dashed ${tokens.color.border}`, borderRadius: 14, background: '#fff', textAlign: 'center' }}>
           <div style={{ fontWeight: 700, fontSize: 16 }}>No tickets yet</div>

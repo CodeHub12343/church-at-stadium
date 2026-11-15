@@ -7,6 +7,7 @@ import { tokens } from '@/lib/tokens';
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
 import { Eyebrow } from '@/components/ui/Card';
+import { Loading } from '@/components/ui/Spinner';
 
 type Notif = {
   id: string;
@@ -145,10 +146,10 @@ export default function NotificationsPage() {
             {unreadCount} unread · updates from your events, tasks, and account
           </p>
         </div>
-        <div style={{ display: 'flex', gap: 10 }}>
-          <Button $variant="secondary" onClick={markAll} disabled={unreadCount === 0}>Mark all read</Button>
+        <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
+          <Button $variant="secondary" onClick={markAll} disabled={unreadCount === 0}>Mark all as read</Button>
           <Link href="/dashboard/settings">
-            <Button>Preferences</Button>
+            <Button>Notification preferences</Button>
           </Link>
         </div>
       </Head>
@@ -177,7 +178,7 @@ export default function NotificationsPage() {
       </Filters>
 
       <List>
-        {loading && <div style={{ padding: 22, color: tokens.color.textSecondary }}>Loading notifications…</div>}
+        {loading && <Loading label="Loading notifications…" pad={28} />}
         {!loading && visible.length === 0 && (
           <div style={{ padding: 22, color: tokens.color.textSecondary }}>Nothing here yet.</div>
         )}

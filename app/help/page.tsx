@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import styled from 'styled-components';
+import { Loading } from '@/components/ui/Spinner';
 import { tokens } from '@/lib/tokens';
 import { PublicNav } from '@/components/public/PublicNav';
 import { PublicFooter } from '@/components/public/PublicFooter';
@@ -246,7 +247,7 @@ export default function HelpCenterPage() {
               </div>
               <div style={{ marginTop: 18 }}>
                 {popular.length === 0 && (
-                  <div style={{ padding: 20, color: tokens.color.textSecondary, fontSize: 13 }}>Loading…</div>
+                  <Loading pad={24} />
                 )}
                 {popular.map((p, i) => (
                   <PopItem key={p.slug} href={`/help/articles/${p.slug}`}>

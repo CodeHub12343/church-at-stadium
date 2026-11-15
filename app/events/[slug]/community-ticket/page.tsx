@@ -10,6 +10,7 @@ import { Button } from '@/components/ui/Button';
 import { Input, Label, FieldGroup, Hint } from '@/components/ui/Input';
 import { Eyebrow } from '@/components/ui/Card';
 import { required } from '@/lib/form';
+import { Loading } from '@/components/ui/Spinner';
 
 type Availability = {
   totalReserved: number;
@@ -244,7 +245,7 @@ export default function CommunityTicketPage() {
     : 0;
 
   if (authStatus === 'loading' || loading) {
-    return <Page><div style={{ padding: 60, textAlign: 'center', color: tokens.color.textSecondary }}>Loading…</div></Page>;
+    return <Page><Loading pad={60} /></Page>;
   }
 
   return (
