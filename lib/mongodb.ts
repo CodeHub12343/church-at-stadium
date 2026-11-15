@@ -1,12 +1,5 @@
 import mongoose from 'mongoose';
 
-const MONGODB_URI = process.env.MONGODB_URI;
-
-if (!MONGODB_URI) {
-  throw new Error('Missing MONGODB_URI in environment');
-}
-
-// Cache across hot reloads in dev so we don't open a new connection on every request.
 interface MongooseCache {
   conn: typeof mongoose | null;
   promise: Promise<typeof mongoose> | null;
@@ -22,8 +15,12 @@ if (!global.__mongooseCache) global.__mongooseCache = cache;
 
 export async function dbConnect(): Promise<typeof mongoose> {
   if (cache.conn) return cache.conn;
+  const uri = process.env.MONGODB_URI;
+  if (!uri) {
+    throw new Error('Missing MONGODB_URI in environment');
+  }
   if (!cache.promise) {
-    cache.promise = mongoose.connect(MONGODB_URI!, {
+    cache.promise = mongoose.connect(uri, {
       bufferCommands: false,
     });
   }
