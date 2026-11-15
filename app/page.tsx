@@ -258,6 +258,9 @@ const MissionGrid = styled.div`
   grid-template-columns: 1fr 1.6fr;
   gap: 80px;
   align-items: start;
+  & > * {
+    min-width: 0;
+  }
   @media (max-width: ${tokens.bp.tablet}) {
     grid-template-columns: 1fr;
     gap: 32px;
@@ -277,15 +280,66 @@ const MissionH = styled.h2`
 const Four = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 28px;
+  gap: 24px;
   margin-top: 40px;
+  position: relative;
+
+  /* Zig-zag on desktop: push the 2nd and 4th cards down for rhythm */
+  & > :nth-child(2) { transform: translateY(32px); }
+  & > :nth-child(4) { transform: translateY(32px); }
+
   @media (max-width: ${tokens.bp.mobile}) {
-    grid-template-columns: 1fr;
-    gap: 18px;
+    display: flex;
+    grid-template-columns: none;
+    gap: 14px;
+    margin-top: 28px;
+    overflow-x: auto;
+    max-width: 100%;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    padding: 4px 4px 20px;
+    scrollbar-width: none;
+    &::-webkit-scrollbar { display: none; }
+    & > * {
+      transform: none !important;
+      flex: 0 0 84%;
+      scroll-snap-align: start;
+    }
   }
 `;
 
 const FourItem = styled.div`
+  position: relative;
+  padding: 26px 24px 24px;
+  background: linear-gradient(180deg, #ffffff 0%, #fbfaf4 100%);
+  border: 1px solid ${tokens.color.border};
+  border-left: 3px solid ${tokens.color.secondary};
+  border-radius: 14px;
+  box-shadow: 0 1px 2px rgba(11, 20, 40, 0.04);
+  overflow: hidden;
+  isolation: isolate;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+  &:hover {
+    box-shadow: 0 12px 28px rgba(11, 20, 40, 0.1);
+  }
+
+  .num {
+    position: absolute;
+    top: -14px;
+    right: 10px;
+    font-family: ${tokens.font.display};
+    font-weight: 800;
+    font-size: 86px;
+    line-height: 1;
+    color: ${tokens.color.secondary};
+    opacity: 0.14;
+    letter-spacing: -0.04em;
+    user-select: none;
+    pointer-events: none;
+    z-index: -1;
+  }
+
   h3 {
     font-size: 19px;
     margin-top: 14px;
@@ -307,6 +361,23 @@ const IconTile = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+`;
+
+const SwipeHint = styled.div`
+  display: none;
+  @media (max-width: ${tokens.bp.mobile}) {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 14px;
+    padding-left: 2px;
+    font-size: 11.5px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: ${tokens.color.textSecondary};
+    font-weight: 600;
+    opacity: 0.7;
+  }
 `;
 
 /* ==========================================================================
@@ -1196,8 +1267,9 @@ export default function HomePage() {
                   { t: 'Coordinate', d: 'Organizers plan the stadium, program, volunteer teams, and resources from one shared workspace.' },
                   { t: 'Volunteer', d: 'Teams across ushering, prayer, media, hospitality and logistics are matched to real responsibilities.' },
                   { t: 'Gather', d: "Attendees find events, register for themselves and their groups, and keep track of what's next." },
-                ].map((x) => (
+                ].map((x, i) => (
                   <FourItem key={x.t}>
+                    <span className="num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
                     <IconTile>
                       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
                         <path d="M12 2L4 6v6c0 5 3.5 9 8 10 4.5-1 8-5 8-10V6l-8-4z" stroke={tokens.color.secondary} strokeWidth="1.8" />
@@ -1208,6 +1280,10 @@ export default function HomePage() {
                   </FourItem>
                 ))}
               </Four>
+              <SwipeHint aria-hidden="true">
+                <span>Swipe to explore</span>
+                <svg width="16" height="10" viewBox="0 0 16 10" fill="none"><path d="M1 5h13m0 0L10 1m4 4l-4 4" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round"/></svg>
+              </SwipeHint>
             </div>
           </MissionGrid>
           </Reveal>
