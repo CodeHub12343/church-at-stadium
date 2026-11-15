@@ -88,17 +88,17 @@ const sampleIncidents = [
 
 const opportunities = [
   {
-    opportunityId: 'opp-lag-media-cam',
-    eventSlug: 'lagos-awakening',
+    opportunityId: 'opp-jhb-media-cam',
+    eventSlug: 'johannesburg-awakening',
     department: 'Media',
     role: 'Camera operator',
-    city: 'Lagos',
+    city: 'Johannesburg',
     dateLabel: '4 Jul 2027',
     monthShort: 'Jul',
     dayShort: '04',
     filled: 6,
     total: 12,
-    supervisor: 'Pastor Ola',
+    supervisor: 'Site lead',
     recommended: true,
   },
   {

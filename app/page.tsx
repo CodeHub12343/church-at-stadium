@@ -1045,7 +1045,7 @@ const mosaicTiles = [
 
 const partnerLogos = [
   'WEMBLEY',
-  'TESLIM BALOGUN',
+  'SOFI STADIUM',
   'ALLIANZ PARQUE',
   'WANKHEDE',
   'KASARANI',

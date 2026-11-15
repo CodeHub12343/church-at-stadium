@@ -128,7 +128,7 @@ const categories: Record<string, Category> = {
     intro: 'What each venue is like on event day — gates, facilities, and arrival.',
     articles: [
       { slug: 'wembley-arrival', title: 'Arriving at Wembley · gates and parking', read: '5 min read' },
-      { slug: 'teslim-arrival', title: 'Arriving at Teslim Balogun Stadium', read: '4 min read' },
+      { slug: 'sofi-arrival', title: 'Arriving at SoFi Stadium · gates and parking', read: '4 min read' },
     ],
   },
 };
