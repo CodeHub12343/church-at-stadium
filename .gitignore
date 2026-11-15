@@ -4,3 +4,10 @@ out
 .env*.local
 .DS_Store
 *.log
+
+# Private notes and planning docs — never commit
+chat*.md
+*whatsapp*.md
+threeplatform.md
+docs/DEVELOPMENT_PLAN.md
+
