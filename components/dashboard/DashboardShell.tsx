@@ -174,13 +174,28 @@ const Main = styled.div`
 `;
 
 const Topbar = styled.header`
-  height: 64px;
-  background: #fff;
+  position: relative;
+  height: 68px;
+  background: linear-gradient(180deg, #ffffff 0%, #fbfaf6 100%);
   border-bottom: 1px solid ${tokens.color.border};
   display: flex;
   justify-content: center;
+  &::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -1px;
+    height: 2px;
+    background: linear-gradient(90deg,
+      transparent 0%,
+      ${tokens.color.secondary}66 20%,
+      ${tokens.color.secondary}66 80%,
+      transparent 100%);
+    opacity: 0.55;
+  }
   @media (max-width: ${tokens.bp.mobile}) {
-    height: 56px;
+    height: 60px;
   }
 `;
 
@@ -233,7 +248,35 @@ const Crumbs = styled.div`
     white-space: nowrap;
   }
   @media (max-width: ${tokens.bp.mobile}) {
-    font-size: 12.5px;
+    display: none;
+  }
+`;
+
+const MobileGreeting = styled.div`
+  display: none;
+  @media (max-width: ${tokens.bp.mobile}) {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    line-height: 1.1;
+    .hi {
+      font-family: ${tokens.font.display};
+      font-weight: 800;
+      font-size: 15px;
+      color: ${tokens.color.primary};
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .sub {
+      font-size: 11px;
+      color: ${tokens.color.textSecondary};
+      margin-top: 3px;
+      letter-spacing: 0.02em;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
   }
 `;
 
@@ -275,7 +318,7 @@ const IconBtn = styled.button`
   position: relative;
   width: 38px;
   height: 38px;
-  border-radius: 9px;
+  border-radius: 10px;
   background: ${tokens.color.surface};
   border: 1px solid ${tokens.color.border};
   cursor: pointer;
@@ -283,6 +326,21 @@ const IconBtn = styled.button`
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
+  transition: background 0.15s, border-color 0.15s, transform 0.1s;
+  &:hover {
+    background: #fff;
+    border-color: ${tokens.color.secondary}55;
+  }
+  &:active {
+    transform: translateY(1px);
+  }
+`;
+
+const SearchIconBtn = styled(IconBtn)`
+  display: none;
+  @media (max-width: ${tokens.bp.tablet}) {
+    display: flex;
+  }
 `;
 
 const Dot = styled.span`
@@ -296,7 +354,8 @@ const Dot = styled.span`
   border: 1.5px solid ${tokens.color.surface};
 `;
 
-const TopAvatar = styled.div`
+const TopAvatar = styled(Link)`
+  position: relative;
   width: 38px;
   height: 38px;
   border-radius: 10px;
@@ -309,6 +368,15 @@ const TopAvatar = styled.div`
   font-family: ${tokens.font.display};
   font-size: 13px;
   flex-shrink: 0;
+  text-decoration: none;
+  box-shadow: 0 0 0 1px ${tokens.color.secondary}55, 0 2px 6px rgba(11, 20, 40, 0.14);
+  transition: box-shadow 0.15s, transform 0.1s;
+  &:hover {
+    box-shadow: 0 0 0 2px ${tokens.color.secondary}, 0 4px 10px rgba(11, 20, 40, 0.18);
+  }
+  &:active {
+    transform: translateY(1px);
+  }
 `;
 
 const Content = styled.main`
@@ -411,10 +479,32 @@ function subtitleFor(p: MeProfile | null): string {
   return church ? `${church} · ${role}` : role;
 }
 
+function greetingFor(p: MeProfile | null): string {
+  const name = p?.firstName?.trim() || 'there';
+  const h = new Date().getHours();
+  const timeOfDay = h < 5 ? 'Welcome' : h < 12 ? 'Good morning' : h < 17 ? 'Good afternoon' : h < 22 ? 'Good evening' : 'Welcome';
+  return `${timeOfDay}, ${name}`;
+}
+
+function todayLabel(): string {
+  try {
+    return new Intl.DateTimeFormat(undefined, { weekday: 'long', month: 'short', day: 'numeric' }).format(new Date());
+  } catch {
+    return '';
+  }
+}
+
 export function DashboardShell({ children, title }: { children: React.ReactNode; title?: string }) {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const [me, setMe] = useState<MeProfile | null>(null);
+  const [greeting, setGreeting] = useState('Welcome');
+  const [dateLabel, setDateLabel] = useState('');
+
+  useEffect(() => {
+    setGreeting(greetingFor(me));
+    setDateLabel(todayLabel());
+  }, [me]);
 
   useEffect(() => {
     setOpen(false);
@@ -528,6 +618,10 @@ export function DashboardShell({ children, title }: { children: React.ReactNode;
                 </>
               )}
             </Crumbs>
+            <MobileGreeting>
+              <div className="hi" suppressHydrationWarning>{greeting}</div>
+              <div className="sub" suppressHydrationWarning>{title || dateLabel}</div>
+            </MobileGreeting>
             <Search>
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
                 <circle cx="11" cy="11" r="7" stroke={tokens.color.textSecondary} strokeWidth="2" />
@@ -536,17 +630,27 @@ export function DashboardShell({ children, title }: { children: React.ReactNode;
               <SearchInput placeholder="Search events, people, resources…" />
             </Search>
             <RightCluster>
-              <IconBtn aria-label="Notifications">
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                  <path
-                    d="M18 8a6 6 0 10-12 0c0 7-3 9-3 9h18s-3-2-3-9M13.7 21a2 2 0 01-3.4 0"
-                    stroke={tokens.color.textSecondary}
-                    strokeWidth="1.8"
-                  />
-                </svg>
-                <Dot />
-              </IconBtn>
-              <TopAvatar>{initialsFor(me)}</TopAvatar>
+              <Link href="/search" aria-label="Search">
+                <SearchIconBtn as="span">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <circle cx="11" cy="11" r="7" stroke={tokens.color.textSecondary} strokeWidth="2" />
+                    <path d="M20 20l-3.5-3.5" stroke={tokens.color.textSecondary} strokeWidth="2" />
+                  </svg>
+                </SearchIconBtn>
+              </Link>
+              <Link href="/dashboard/notifications" aria-label="Notifications">
+                <IconBtn as="span">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <path
+                      d="M18 8a6 6 0 10-12 0c0 7-3 9-3 9h18s-3-2-3-9M13.7 21a2 2 0 01-3.4 0"
+                      stroke={tokens.color.textSecondary}
+                      strokeWidth="1.8"
+                    />
+                  </svg>
+                  <Dot />
+                </IconBtn>
+              </Link>
+              <TopAvatar href="/dashboard/profile" aria-label="Open profile">{initialsFor(me)}</TopAvatar>
             </RightCluster>
           </TopbarInner>
         </Topbar>
