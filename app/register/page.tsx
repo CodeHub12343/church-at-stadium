@@ -17,6 +17,7 @@ const Page = styled.div`
   grid-template-columns: 1fr 1fr;
   @media (max-width: ${tokens.bp.tablet}) {
     grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr;
   }
 `;
 
@@ -38,7 +39,8 @@ const Side = styled.aside`
     z-index: -1;
   }
   @media (max-width: ${tokens.bp.tablet}) {
-    display: none;
+    min-height: 260px;
+    padding: 28px 24px 24px;
   }
 `;
 
