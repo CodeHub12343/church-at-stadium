@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import styled from 'styled-components';
 import { tokens } from '@/lib/tokens';
@@ -46,7 +46,7 @@ function scorePassword(pw: string) {
   return s;
 }
 
-export default function ResetPasswordPage() {
+function ResetPasswordPageInner() {
   const [pw, setPw] = useState('');
   const [confirm, setConfirm] = useState('');
   const [error, setError] = useState<string | null>(null);
@@ -150,5 +150,13 @@ export default function ResetPasswordPage() {
         After resetting, all your other devices will be signed out as a precaution.
       </div>
     </AuthShell>
+  );
+}
+
+export default function ResetPasswordPage() {
+  return (
+    <Suspense fallback={null}>
+      <ResetPasswordPageInner />
+    </Suspense>
   );
 }

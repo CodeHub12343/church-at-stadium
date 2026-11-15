@@ -1,3 +1,5 @@
+﻿export const dynamic = 'force-dynamic';
+
 import { NextResponse } from 'next/server';
 import { dbConnect } from '@/lib/mongodb';
 import { Incident } from '@/lib/models/Incident';

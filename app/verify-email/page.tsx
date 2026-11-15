@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import styled from 'styled-components';
@@ -33,7 +33,7 @@ const Chip = styled.span`
   border-radius: 999px;
 `;
 
-export default function VerifyEmailPage() {
+function VerifyEmailPageInner() {
   const search = useSearchParams();
   const token = search?.get('token');
   const emailParam = search?.get('email');
@@ -158,5 +158,13 @@ export default function VerifyEmailPage() {
         </div>
       </div>
     </AuthShell>
+  );
+}
+
+export default function VerifyEmailPage() {
+  return (
+    <Suspense fallback={null}>
+      <VerifyEmailPageInner />
+    </Suspense>
   );
 }

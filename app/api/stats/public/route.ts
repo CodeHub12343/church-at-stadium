@@ -1,3 +1,5 @@
+﻿export const dynamic = 'force-dynamic';
+
 import { NextResponse } from 'next/server';
 import { dbConnect } from '@/lib/mongodb';
 import { Church } from '@/lib/models/Church';
@@ -37,7 +39,7 @@ export async function GET() {
     });
   } catch (err) {
     console.error('[stats/public] error', err);
-    // Fail soft so the homepage can render placeholder "—" without breaking.
+    // Fail soft so the homepage can render placeholder "â€”" without breaking.
     return NextResponse.json(
       { partnerChurches: null, countries: null, attendees: null, events: null, asOf: null },
       { status: 200 }
