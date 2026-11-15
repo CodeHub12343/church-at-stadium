@@ -146,9 +146,9 @@ export default function NotificationsPage() {
           </p>
         </div>
         <div style={{ display: 'flex', gap: 10 }}>
-          <Button $variant="secondary" onClick={markAll} disabled={unreadCount === 0}>Mark all as read</Button>
+          <Button $variant="secondary" onClick={markAll} disabled={unreadCount === 0}>Mark all read</Button>
           <Link href="/dashboard/settings">
-            <Button>Notification preferences</Button>
+            <Button>Preferences</Button>
           </Link>
         </div>
       </Head>
