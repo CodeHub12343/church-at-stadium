@@ -289,22 +289,11 @@ const Four = styled.div`
   & > :nth-child(4) { transform: translateY(32px); }
 
   @media (max-width: ${tokens.bp.mobile}) {
-    display: flex;
-    grid-template-columns: none;
-    gap: 14px;
-    margin-top: 28px;
-    overflow-x: auto;
-    max-width: 100%;
-    scroll-snap-type: x mandatory;
-    -webkit-overflow-scrolling: touch;
-    padding: 4px 4px 20px;
-    scrollbar-width: none;
-    &::-webkit-scrollbar { display: none; }
-    & > * {
-      transform: none !important;
-      flex: 0 0 84%;
-      scroll-snap-align: start;
-    }
+    gap: 12px;
+    margin-top: 24px;
+    /* Keep 2-up on mobile but drop the zig-zag so rows align cleanly */
+    & > :nth-child(2),
+    & > :nth-child(4) { transform: none; }
   }
 `;
 
@@ -351,6 +340,14 @@ const FourItem = styled.div`
     color: ${tokens.color.textSecondary};
     margin-top: 6px;
   }
+
+  @media (max-width: ${tokens.bp.mobile}) {
+    padding: 18px 14px 16px;
+    border-radius: 12px;
+    .num { font-size: 56px; top: -8px; right: 6px; opacity: 0.12; }
+    h3 { font-size: 15px; margin-top: 10px; }
+    p { font-size: 12.5px; line-height: 1.5; margin-top: 4px; }
+  }
 `;
 
 const IconTile = styled.div`
@@ -363,22 +360,6 @@ const IconTile = styled.div`
   justify-content: center;
 `;
 
-const SwipeHint = styled.div`
-  display: none;
-  @media (max-width: ${tokens.bp.mobile}) {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    margin-top: 14px;
-    padding-left: 2px;
-    font-size: 11.5px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: ${tokens.color.textSecondary};
-    font-weight: 600;
-    opacity: 0.7;
-  }
-`;
 
 /* ==========================================================================
    SIGNATURE VENUES  —  cinematic stadium cards
@@ -1280,10 +1261,6 @@ export default function HomePage() {
                   </FourItem>
                 ))}
               </Four>
-              <SwipeHint aria-hidden="true">
-                <span>Swipe to explore</span>
-                <svg width="16" height="10" viewBox="0 0 16 10" fill="none"><path d="M1 5h13m0 0L10 1m4 4l-4 4" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round"/></svg>
-              </SwipeHint>
             </div>
           </MissionGrid>
           </Reveal>
